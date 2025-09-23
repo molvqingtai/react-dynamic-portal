@@ -1,0 +1,39 @@
+{
+  "name": "react-dynamic-portal",
+  "version": "1.0.0",
+  "description": "A React component that provides dynamic portal functionality with flexible positioning options",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsdown src/index.ts --dts --format esm --sourcemap --watch",
+    "build": "tsdown src/index.ts --dts --format esm --sourcemap --minify --clean",
+    "lint": "eslint --fix --cache",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [
+    "react",
+    "portal",
+    "dynamic",
+    "dom",
+    "positioning",
+    "append",
+    "prepend",
+    "before",
+    "after"
+  ],
+  "author": "molvqingtai",
+  "license": "MIT",
+  "packageManager": "pnpm@10.5.2",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tsdown": "^0.15.4",
+    "typescript": "~5.8.3"
+  }
+}
