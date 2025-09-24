@@ -5,8 +5,8 @@ export interface DynamicPortalProps {
   anchor: string | (() => Element | null) | Element | React.RefObject<Element | null> | null
   position?: 'append' | 'prepend' | 'before' | 'after'
   children: React.ReactNode
-  onMount?: (anchor: Element, portal: HTMLDivElement) => void
-  onUnmount?: (anchor: Element, portal: HTMLDivElement) => void
+  onMount?: (anchor: Element, container: HTMLDivElement) => void
+  onUnmount?: (anchor: Element, container: HTMLDivElement) => void
   ref?: React.Ref<HTMLDivElement | null>
   key?: React.Key
 }
