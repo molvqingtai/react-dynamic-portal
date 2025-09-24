@@ -32,8 +32,7 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
     (anchorElement: Element): HTMLDivElement | null => {
       const container = document.createElement('div')
       container.style = 'display: contents !important;'
-      container.setAttribute('data-magic-portal', 'true')
-
+      container.dataset.magicPortal = 'true'
       const positionMap = {
         before: 'beforebegin',
         prepend: 'afterbegin',
