@@ -1,173 +1,123 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import ReactDOM from "react-dom";
+import React, { useEffect, useState, useRef, useCallback } from 'react'
+import ReactDOM from 'react-dom'
 
 export interface DynamicPortalProps {
-  anchor:
-    | string
-    | (() => Element | null)
-    | Element
-    | null
-    | React.RefObject<Element>;
-  position?: "append" | "prepend" | "before" | "after";
-  children: React.ReactNode;
-  onMount?: (anchor: Element, portal: HTMLDivElement) => void;
-  onUnmount?: (anchor: Element, portal: HTMLDivElement) => void;
-  ref?: React.Ref<HTMLDivElement | null>;
-  key?: React.Key;
+  anchor: string | (() => Element | null) | Element | React.RefObject<Element | null> | null
+  position?: 'append' | 'prepend' | 'before' | 'after'
+  children: React.ReactNode
+  onMount?: (anchor: Element, portal: HTMLDivElement) => void
+  onUnmount?: (anchor: Element, portal: HTMLDivElement) => void
+  ref?: React.Ref<HTMLDivElement | null>
+  key?: React.Key
 }
 
-const DynamicPortal = ({
-  anchor,
-  position = "append",
-  children,
-  onMount,
-  onUnmount,
-  ref: forwardedRef,
-  key,
-}: DynamicPortalProps) => {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
-  const currentAnchorRef = useRef<Element | null>(null);
+const DynamicPortal = ({ anchor, position = 'append', children, onMount, onUnmount, ref, key }: DynamicPortalProps) => {
+  const [container, setContainer] = useState<HTMLDivElement | null>(null)
+  const anchorRef = useRef<Element | null>(null)
 
-  const createPortalContainer = useCallback(
+  const updateRef = useCallback(
+    (element: HTMLDivElement | null) => {
+      if (ref) {
+        if (typeof ref === 'function') {
+          ref(element)
+        } else {
+          ref.current = element
+        }
+      }
+    },
+    [ref]
+  )
+
+  const createContainer = useCallback(
     (anchorElement: Element): HTMLDivElement | null => {
-      const portalContainer = document.createElement("div");
-      portalContainer.style.display = "contents";
+      const container = document.createElement('div')
+      container.style.display = 'contents'
 
       const positionMap = {
-        before: "beforebegin",
-        prepend: "afterbegin",
-        append: "beforeend",
-        after: "afterend",
-      } as const;
+        before: 'beforebegin',
+        prepend: 'afterbegin',
+        append: 'beforeend',
+        after: 'afterend'
+      } as const
 
-      const result = anchorElement.insertAdjacentElement(
-        positionMap[position],
-        portalContainer,
-      );
+      const result = anchorElement.insertAdjacentElement(positionMap[position], container)
 
-      if (result && forwardedRef) {
-        if (typeof forwardedRef === "function") {
-          forwardedRef(portalContainer);
-        } else {
-          forwardedRef.current = portalContainer;
-        }
-      }
-
-      return result as HTMLDivElement | null;
+      return result as HTMLDivElement | null
     },
-    [position, forwardedRef],
-  );
+    [position]
+  )
+
+  const resolveAnchor = useCallback((): Element | null => {
+    if (typeof anchor === 'string') {
+      return document.querySelector(anchor)
+    } else if (typeof anchor === 'function') {
+      return anchor()
+    } else if (anchor && 'current' in anchor) {
+      return anchor.current
+    } else {
+      return anchor
+    }
+  }, [anchor])
 
   const updateAnchor = useCallback(() => {
-    let newAnchor: Element | null = null;
+    const newAnchor = resolveAnchor()
 
-    if (typeof anchor === "string") {
-      newAnchor = document.querySelector(anchor);
-    } else if (typeof anchor === "function") {
-      newAnchor = anchor();
-    } else if (anchor && "current" in anchor) {
-      newAnchor = anchor.current;
-    } else {
-      newAnchor = anchor;
-    }
+    setContainer((prevContainer) => {
+      prevContainer?.remove()
+      anchorRef.current = newAnchor
+      const newContainer = newAnchor ? createContainer(newAnchor) : null
+      updateRef(newContainer)
+      return newContainer
+    })
+  }, [resolveAnchor, createContainer, updateRef])
 
-    if (newAnchor !== currentAnchorRef.current) {
-      // 清理旧容器
-      if (container) {
-        container.remove();
-        if (forwardedRef) {
-          if (typeof forwardedRef === "function") {
-            forwardedRef(null);
-          } else {
-            forwardedRef.current = null;
-          }
-        }
-      }
-
-      currentAnchorRef.current = newAnchor;
-      setContainer(newAnchor ? createPortalContainer(newAnchor) : null);
-    }
-  }, [anchor, container, createPortalContainer, forwardedRef]);
-
-  // 初始化和监听变化
   useEffect(() => {
-    updateAnchor();
+    updateAnchor()
 
     const observer = new MutationObserver((mutations) => {
       const shouldUpdate = mutations.some((mutation) => {
-        const { addedNodes, removedNodes } = mutation;
+        const { addedNodes, removedNodes } = mutation
 
-        // 检查当前 anchor 是否被删除
-        if (
-          currentAnchorRef.current &&
-          Array.from(removedNodes).includes(currentAnchorRef.current)
-        ) {
-          return true;
+        // Check if current anchor is removed
+        if (anchorRef.current && Array.from(removedNodes).includes(anchorRef.current)) {
+          return true
         }
 
-        // 只有当 anchor 是字符串选择器时，才检查新增节点
-        if (typeof anchor === "string") {
+        // Only check added nodes when anchor is a string selector
+        if (typeof anchor === 'string') {
           return Array.from(addedNodes).some(
-            (node) =>
-              node.nodeType === Node.ELEMENT_NODE &&
-              node instanceof Element &&
-              node.matches?.(anchor),
-          );
+            (node) => node.nodeType === Node.ELEMENT_NODE && node instanceof Element && node.matches?.(anchor)
+          )
         }
 
-        return false;
-      });
+        return false
+      })
 
       if (shouldUpdate) {
-        updateAnchor();
+        updateAnchor()
       }
-    });
+    })
 
     observer.observe(document.body, {
       childList: true,
-      subtree: true,
-    });
+      subtree: true
+    })
 
-    return () => observer.disconnect();
-  }, [updateAnchor, anchor]);
+    return () => observer.disconnect()
+  }, [updateAnchor, anchor])
 
-  // 处理 mount/unmount 回调
   useEffect(() => {
-    if (currentAnchorRef.current && container) {
-      const portalElement = container;
-      onMount?.(currentAnchorRef.current, portalElement);
-
+    if (anchorRef.current && container) {
+      onMount?.(anchorRef.current, container)
       return () => {
-        if (currentAnchorRef.current) {
-          onUnmount?.(currentAnchorRef.current, portalElement);
-        }
-      };
-    }
-  }, [container, onMount, onUnmount]);
-
-  // 清理容器
-  useEffect(() => {
-    return () => {
-      if (container) {
-        container.remove();
-        if (forwardedRef) {
-          if (typeof forwardedRef === "function") {
-            forwardedRef(null);
-          } else {
-            forwardedRef.current = null;
-          }
-        }
+        onUnmount?.(anchorRef.current!, container)
       }
-    };
-  }, [container, forwardedRef]);
+    }
+  }, [container, onMount, onUnmount])
 
-  if (!container) {
-    return null;
-  }
+  return container ? ReactDOM.createPortal(children, container, key) : null
+}
 
-  return ReactDOM.createPortal(children, container, key);
-};
+DynamicPortal.displayName = 'DynamicPortal'
 
-DynamicPortal.displayName = "DynamicPortal";
-
-export default DynamicPortal;
+export default DynamicPortal

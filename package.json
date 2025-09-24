@@ -1,20 +1,62 @@
 {
   "name": "react-dynamic-portal",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "React Portal with dynamic mounting support",
+  "main": "packages/component/dist/index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --filter react-dynamic-portal dev",
+    "build": "pnpm --filter react-dynamic-portal build",
+    "dev:example": "pnpm --filter example dev",
+    "lint": "npm-run-all -p lint:*",
+    "check": "npm-run-all -p check:*",
+    "test": "pnpm --filter __tests__ test",
+    "test:ui": "pnpm --filter __tests__ test:ui",
+    "lint:component": "pnpm --filter react-dynamic-portal lint",
+    "lint:example": "pnpm --filter example lint",
+    "lint:tests": "pnpm --filter __tests__ lint",
+    "check:component": "pnpm --filter react-dynamic-portal check",
+    "check:example": "pnpm --filter example check",
+    "check:tests": "pnpm --filter __tests__ check",
+    "prepare": "husky"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "portal",
+    "dynamic",
+    "browser-extension",
+    "content-script",
+    "mutation-observer",
+    "inject",
+    "mount",
+    "anchor",
+    "reactdom",
+    "createportal",
+    "web-extension",
+    "chrome-extension",
+    "firefox-extension",
+    "dynamic-content",
+    "dom-manipulation",
+    "typescript"
+  ],
   "author": "molvqingtai",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/molvqingtai/react-dynamic-portal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/molvqingtai/react-dynamic-portal/issues"
+  },
+  "homepage": "https://github.com/molvqingtai/react-dynamic-portal#readme",
   "packageManager": "pnpm@10.5.2",
-  "devDependencies": {
-    "@eslint/js": "^9.36.0",
-    "eslint": "^9.36.0",
-    "eslint-plugin-react": "^7.37.5",
-    "globals": "^16.4.0",
-    "typescript-eslint": "^8.44.1"
+  "dependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "husky": "^9.1.7",
+    "npm-run-all": "^4.1.5",
+    "semantic-release": "^24.2.7"
   }
 }
