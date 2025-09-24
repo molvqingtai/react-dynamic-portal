@@ -31,7 +31,7 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
   const createContainer = useCallback(
     (anchorElement: Element): HTMLDivElement | null => {
       const container = document.createElement('div')
-      container.style.display = 'contents'
+      container.style = 'display: contents !important;'
 
       const positionMap = {
         before: 'beforebegin',
