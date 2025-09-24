@@ -108,11 +108,11 @@ function MultiplePortals() {
 #### CSS Selector String
 
 ```jsx
-<MagicPortal anchor="#anchor-id">
+<MagicPortal anchor="#anchor">
   <div>Content</div>
 </MagicPortal>
 
-<MagicPortal anchor=".anchor-class">
+<MagicPortal anchor=".anchor">
   <div>Content</div>
 </MagicPortal>
 ```
@@ -123,6 +123,7 @@ function MultiplePortals() {
 const elementRef = useRef(null)
 
 <div ref={elementRef}>Target</div>
+
 <MagicPortal anchor={elementRef}>
   <div>Content</div>
 </MagicPortal>
