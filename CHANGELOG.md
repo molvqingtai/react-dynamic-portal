@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.0...v1.1.1) (2025-09-24)
+
+
+### Performance Improvements
+
+* contents increase weight ([b15c7d1](https://github.com/molvqingtai/react-magic-portal/commit/b15c7d12dd9cca0b2dba3e1e693c177d221e4b1f))
+
 # [1.1.0](https://github.com/molvqingtai/react-magic-portal/compare/v1.0.0...v1.1.0) (2025-09-24)
 
 
