@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import DynamicPortal from 'react-dynamic-portal'
+import MagicPortal from 'react-magic-portal'
 import PortalContent from './components/portal-content'
 import './App.css'
 
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>DynamicPortal Example</h1>
+      <h1>MagicPortal Example</h1>
 
       <h2>Target Anchor</h2>
       <div className="portal-preview">
@@ -31,21 +31,21 @@ function App() {
       </div>
 
       {/* Target anchor examples */}
-      <DynamicPortal anchor="#dynamic-anchor" position="append" onMount={handleMount} onUnmount={handleUnmount}>
+      <MagicPortal anchor="#dynamic-anchor" position="append" onMount={handleMount} onUnmount={handleUnmount}>
         <PortalContent position="append" />
-      </DynamicPortal>
+      </MagicPortal>
 
-      <DynamicPortal anchor="#dynamic-anchor" position="prepend" onMount={handleMount} onUnmount={handleUnmount}>
+      <MagicPortal anchor="#dynamic-anchor" position="prepend" onMount={handleMount} onUnmount={handleUnmount}>
         <PortalContent position="prepend" />
-      </DynamicPortal>
+      </MagicPortal>
 
-      <DynamicPortal anchor="#dynamic-anchor" position="before" onMount={handleMount} onUnmount={handleUnmount}>
+      <MagicPortal anchor="#dynamic-anchor" position="before" onMount={handleMount} onUnmount={handleUnmount}>
         <PortalContent position="before" />
-      </DynamicPortal>
+      </MagicPortal>
 
-      <DynamicPortal anchor="#dynamic-anchor" position="after" onMount={handleMount} onUnmount={handleUnmount}>
+      <MagicPortal anchor="#dynamic-anchor" position="after" onMount={handleMount} onUnmount={handleUnmount}>
         <PortalContent position="after" />
-      </DynamicPortal>
+      </MagicPortal>
 
       <h2>Instructions</h2>
       <div className="instructions">
@@ -65,14 +65,14 @@ function App() {
         </ul>
 
         <p>
-          <strong>💡 Key Feature:</strong> Notice how DynamicPortal automatically detects when the target anchor appears
+          <strong>💡 Key Feature:</strong> Notice how MagicPortal automatically detects when the target anchor appears
           or disappears. When you toggle the anchor visibility, the portal content automatically mounts and unmounts
           without any manual intervention.
         </p>
 
         <p>
           Open the browser console to see mount/unmount events. Try toggling the target anchor visibility to see how
-          DynamicPortal responds to DOM changes in real-time.
+          MagicPortal responds to DOM changes in real-time.
         </p>
       </div>
     </div>

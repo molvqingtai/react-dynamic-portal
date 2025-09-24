@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import ReactDOM from 'react-dom'
 
-export interface DynamicPortalProps {
+export interface MagicPortalProps {
   anchor: string | (() => Element | null) | Element | React.RefObject<Element | null> | null
   position?: 'append' | 'prepend' | 'before' | 'after'
   children: React.ReactNode
@@ -11,7 +11,7 @@ export interface DynamicPortalProps {
   key?: React.Key
 }
 
-const DynamicPortal = ({ anchor, position = 'append', children, onMount, onUnmount, ref, key }: DynamicPortalProps) => {
+const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount, ref, key }: MagicPortalProps) => {
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const anchorRef = useRef<Element | null>(null)
 
@@ -118,6 +118,6 @@ const DynamicPortal = ({ anchor, position = 'append', children, onMount, onUnmou
   return container ? ReactDOM.createPortal(children, container, key) : null
 }
 
-DynamicPortal.displayName = 'DynamicPortal'
+MagicPortal.displayName = 'MagicPortal'
 
-export default DynamicPortal
+export default MagicPortal

@@ -32,7 +32,7 @@ importers:
 
   __tests__:
     dependencies:
-      react-dynamic-portal:
+      react-magic-portal:
         specifier: workspace:*
         version: link:../packages/component
     devDependencies:
@@ -156,7 +156,7 @@ importers:
       react-dom:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
-      react-dynamic-portal:
+      react-magic-portal:
         specifier: workspace:*
         version: link:../component
     devDependencies:

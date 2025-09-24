@@ -1,21 +1,21 @@
 {
-  "name": "react-dynamic-portal",
+  "name": "react-magic-portal",
   "version": "1.0.0",
   "description": "React Portal with dynamic mounting support",
   "main": "packages/component/dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "pnpm --filter react-dynamic-portal dev",
-    "build": "pnpm --filter react-dynamic-portal build",
+    "dev": "pnpm --filter react-magic-portal dev",
+    "build": "pnpm --filter react-magic-portal build",
     "dev:example": "pnpm --filter example dev",
     "lint": "npm-run-all -p lint:*",
     "check": "npm-run-all -p check:*",
     "test": "pnpm --filter __tests__ test",
     "test:ui": "pnpm --filter __tests__ test:ui",
-    "lint:component": "pnpm --filter react-dynamic-portal lint",
+    "lint:component": "pnpm --filter react-magic-portal lint",
     "lint:example": "pnpm --filter example lint",
     "lint:tests": "pnpm --filter __tests__ lint",
-    "check:component": "pnpm --filter react-dynamic-portal check",
+    "check:component": "pnpm --filter react-magic-portal check",
     "check:example": "pnpm --filter example check",
     "check:tests": "pnpm --filter __tests__ check",
     "prepare": "husky"
@@ -43,12 +43,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/molvqingtai/react-dynamic-portal.git"
+    "url": "https://github.com/molvqingtai/react-magic-portal.git"
   },
   "bugs": {
-    "url": "https://github.com/molvqingtai/react-dynamic-portal/issues"
+    "url": "https://github.com/molvqingtai/react-magic-portal/issues"
   },
-  "homepage": "https://github.com/molvqingtai/react-dynamic-portal#readme",
+  "homepage": "https://github.com/molvqingtai/react-magic-portal#readme",
   "dependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",

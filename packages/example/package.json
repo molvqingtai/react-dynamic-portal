@@ -13,7 +13,7 @@
   "dependencies": {
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-dynamic-portal": "workspace:*"
+    "react-magic-portal": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

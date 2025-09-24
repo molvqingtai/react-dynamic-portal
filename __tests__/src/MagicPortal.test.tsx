@@ -2,9 +2,9 @@ import { useRef, useState } from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import DynamicPortal from 'react-dynamic-portal'
+import MagicPortal from 'react-magic-portal'
 
-describe('DynamicPortal', () => {
+describe('MagicPortal', () => {
   beforeEach(() => {
     document.body.innerHTML = ''
   })
@@ -21,9 +21,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       render(
-        <DynamicPortal anchor="#test-anchor">
+        <MagicPortal anchor="#test-anchor">
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       const portalContent = screen.getByTestId('portal-content')
@@ -33,9 +33,9 @@ describe('DynamicPortal', () => {
 
     it('should not render children when anchor does not exist', () => {
       render(
-        <DynamicPortal anchor="#non-existent">
+        <MagicPortal anchor="#non-existent">
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(screen.queryByTestId('portal-content')).toBeNull()
@@ -48,10 +48,10 @@ describe('DynamicPortal', () => {
         return (
           <div>
             <button onClick={() => setShowAnchor(true)}>Show Anchor</button>
-            {showAnchor && <div id="dynamic-anchor">Anchor</div>}
-            <DynamicPortal anchor="#dynamic-anchor">
+            {showAnchor && <div id="magic-anchor">Anchor</div>}
+            <MagicPortal anchor="#magic-anchor">
               <div data-testid="portal-content">Portal Content</div>
-            </DynamicPortal>
+            </MagicPortal>
           </div>
         )
       }
@@ -75,10 +75,10 @@ describe('DynamicPortal', () => {
         return (
           <div>
             <button onClick={() => setShowAnchor(false)}>Hide Anchor</button>
-            {showAnchor && <div id="dynamic-anchor">Anchor</div>}
-            <DynamicPortal anchor="#dynamic-anchor">
+            {showAnchor && <div id="magic-anchor">Anchor</div>}
+            <MagicPortal anchor="#magic-anchor">
               <div data-testid="portal-content">Portal Content</div>
-            </DynamicPortal>
+            </MagicPortal>
           </div>
         )
       }
@@ -103,9 +103,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       render(
-        <DynamicPortal anchor=".test-class">
+        <MagicPortal anchor=".test-class">
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       const portalContent = screen.getByTestId('portal-content')
@@ -122,9 +122,9 @@ describe('DynamicPortal', () => {
             <div ref={anchorRef} data-testid="anchor">
               Anchor
             </div>
-            <DynamicPortal anchor={anchorRef}>
+            <MagicPortal anchor={anchorRef}>
               <div data-testid="portal-content">Portal Content</div>
-            </DynamicPortal>
+            </MagicPortal>
           </div>
         )
       }
@@ -143,9 +143,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       render(
-        <DynamicPortal anchor={() => document.getElementById('function-anchor')}>
+        <MagicPortal anchor={() => document.getElementById('function-anchor')}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       const portalContent = screen.getByTestId('portal-content')
@@ -158,9 +158,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       render(
-        <DynamicPortal anchor={anchor}>
+        <MagicPortal anchor={anchor}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       const portalContent = screen.getByTestId('portal-content')
@@ -170,9 +170,9 @@ describe('DynamicPortal', () => {
 
     it('should handle null anchor gracefully', () => {
       render(
-        <DynamicPortal anchor={null}>
+        <MagicPortal anchor={null}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(screen.queryByTestId('portal-content')).toBeNull()
@@ -189,9 +189,9 @@ describe('DynamicPortal', () => {
 
     it('should append by default', () => {
       render(
-        <DynamicPortal anchor="#position-anchor">
+        <MagicPortal anchor="#position-anchor">
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       const anchor = document.getElementById('position-anchor')!
@@ -202,9 +202,9 @@ describe('DynamicPortal', () => {
 
     it('should prepend when position is prepend', () => {
       render(
-        <DynamicPortal anchor="#position-anchor" position="prepend">
+        <MagicPortal anchor="#position-anchor" position="prepend">
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       const anchor = document.getElementById('position-anchor')!
@@ -215,9 +215,9 @@ describe('DynamicPortal', () => {
 
     it('should position before when position is before', () => {
       render(
-        <DynamicPortal anchor="#position-anchor" position="before">
+        <MagicPortal anchor="#position-anchor" position="before">
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       const anchor = document.getElementById('position-anchor')!
@@ -231,9 +231,9 @@ describe('DynamicPortal', () => {
 
     it('should position after when position is after', () => {
       render(
-        <DynamicPortal anchor="#position-anchor" position="after">
+        <MagicPortal anchor="#position-anchor" position="after">
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       const anchor = document.getElementById('position-anchor')!
@@ -254,9 +254,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       render(
-        <DynamicPortal anchor="#mount-anchor" onMount={onMount}>
+        <MagicPortal anchor="#mount-anchor" onMount={onMount}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       await waitFor(() => {
@@ -272,9 +272,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       const { unmount } = render(
-        <DynamicPortal anchor="#unmount-anchor" onUnmount={onUnmount}>
+        <MagicPortal anchor="#unmount-anchor" onUnmount={onUnmount}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(screen.getByTestId('portal-content')).toBeTruthy()
@@ -294,9 +294,9 @@ describe('DynamicPortal', () => {
       anchor.id = 'toggle-anchor'
 
       const { unmount } = render(
-        <DynamicPortal anchor="#toggle-anchor" onMount={onMount} onUnmount={onUnmount}>
+        <MagicPortal anchor="#toggle-anchor" onMount={onMount} onUnmount={onUnmount}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       // No anchor exists initially
@@ -326,9 +326,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       render(
-        <DynamicPortal anchor="#ref-anchor" ref={ref}>
+        <MagicPortal anchor="#ref-anchor" ref={ref}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(ref.current).toBeInstanceOf(HTMLDivElement)
@@ -346,9 +346,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       render(
-        <DynamicPortal anchor="#func-ref-anchor" ref={refCallback}>
+        <MagicPortal anchor="#func-ref-anchor" ref={refCallback}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(refElement).toBeInstanceOf(HTMLDivElement)
@@ -364,12 +364,12 @@ describe('DynamicPortal', () => {
 
       render(
         <div>
-          <DynamicPortal anchor="#multi-anchor" position="prepend">
+          <MagicPortal anchor="#multi-anchor" position="prepend">
             <div data-testid="portal-1">Portal 1</div>
-          </DynamicPortal>
-          <DynamicPortal anchor="#multi-anchor" position="append">
+          </MagicPortal>
+          <MagicPortal anchor="#multi-anchor" position="append">
             <div data-testid="portal-2">Portal 2</div>
-          </DynamicPortal>
+          </MagicPortal>
         </div>
       )
 
@@ -382,14 +382,14 @@ describe('DynamicPortal', () => {
     })
   })
 
-  describe('Dynamic Content Updates', () => {
+  describe('Magic Content Updates', () => {
     it('should detect when matching elements are added to DOM', async () => {
       function TestComponent() {
         const [elementCount, setElementCount] = useState(0)
 
         const addElement = () => {
           const newElement = document.createElement('div')
-          newElement.className = 'dynamic-target'
+          newElement.className = 'magic-target'
           newElement.textContent = `Target ${elementCount + 1}`
           document.body.appendChild(newElement)
           setElementCount((prev) => prev + 1)
@@ -398,9 +398,9 @@ describe('DynamicPortal', () => {
         return (
           <div>
             <button onClick={addElement}>Add Target Element</button>
-            <DynamicPortal anchor=".dynamic-target">
+            <MagicPortal anchor=".magic-target">
               <div data-testid="portal-content">Portal Content</div>
-            </DynamicPortal>
+            </MagicPortal>
           </div>
         )
       }
@@ -422,9 +422,9 @@ describe('DynamicPortal', () => {
     it('should handle invalid selectors gracefully', () => {
       expect(() => {
         render(
-          <DynamicPortal anchor="invalid>>>selector">
+          <MagicPortal anchor="invalid>>>selector">
             <div data-testid="portal-content">Portal Content</div>
-          </DynamicPortal>
+          </MagicPortal>
         )
       }).not.toThrow()
 
@@ -433,9 +433,9 @@ describe('DynamicPortal', () => {
 
     it('should handle function that returns null', () => {
       render(
-        <DynamicPortal anchor={() => null}>
+        <MagicPortal anchor={() => null}>
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(screen.queryByTestId('portal-content')).toBeNull()
@@ -449,9 +449,9 @@ describe('DynamicPortal', () => {
       // The component should handle the error gracefully and not crash
       expect(() => {
         render(
-          <DynamicPortal anchor={errorFunction}>
+          <MagicPortal anchor={errorFunction}>
             <div data-testid="portal-content">Portal Content</div>
-          </DynamicPortal>
+          </MagicPortal>
         )
       }).toThrow('Test error')
 
@@ -467,17 +467,17 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       const { rerender } = render(
-        <DynamicPortal anchor="#key-anchor" key="test-key-1">
+        <MagicPortal anchor="#key-anchor" key="test-key-1">
           <div data-testid="portal-content-1">Portal Content 1</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(screen.getByTestId('portal-content-1')).toBeTruthy()
 
       rerender(
-        <DynamicPortal anchor="#key-anchor" key="test-key-2">
+        <MagicPortal anchor="#key-anchor" key="test-key-2">
           <div data-testid="portal-content-2">Portal Content 2</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(screen.queryByTestId('portal-content-1')).toBeNull()
@@ -492,9 +492,9 @@ describe('DynamicPortal', () => {
       document.body.appendChild(anchor)
 
       const { unmount } = render(
-        <DynamicPortal anchor="#cleanup-anchor">
+        <MagicPortal anchor="#cleanup-anchor">
           <div data-testid="portal-content">Portal Content</div>
-        </DynamicPortal>
+        </MagicPortal>
       )
 
       expect(screen.getByTestId('portal-content')).toBeTruthy()

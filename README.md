@@ -1,11 +1,11 @@
-# React Dynamic Portal
+# React Magic Portal
 
-A React component designed for browser extension development that provides dynamic portal functionality with automatic anchor detection and DOM mutation monitoring.
+A React component designed for browser extension development that provides magical portal functionality with automatic anchor detection and DOM mutation monitoring.
 
-[![version](https://img.shields.io/github/v/release/molvqingtai/react-dynamic-portal)](https://www.npmjs.com/package/react-dynamic-portal) [![workflow](https://github.com/molvqingtai/react-dynamic-portal/actions/workflows/ci.yml/badge.svg)](https://github.com/molvqingtai/react-dynamic-portal/actions) [![download](https://img.shields.io/npm/dt/react-dynamic-portal)](https://www.npmjs.com/package/react-dynamic-portal) [![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/react-dynamic-portal)](https://www.npmjs.com/package/react-dynamic-portal) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/molvqingtai/react-dynamic-portal)
+[![version](https://img.shields.io/github/v/release/molvqingtai/react-magic-portal)](https://www.npmjs.com/package/react-magic-portal) [![workflow](https://github.com/molvqingtai/react-magic-portal/actions/workflows/ci.yml/badge.svg)](https://github.com/molvqingtai/react-magic-portal/actions) [![download](https://img.shields.io/npm/dt/react-magic-portal)](https://www.npmjs.com/package/react-magic-portal) [![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/react-magic-portal)](https://www.npmjs.com/package/react-magic-portal) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/molvqingtai/react-magic-portal)
 
 ```bash
-$ pnpm add react-dynamic-portal
+$ pnpm add react-magic-portal
 ```
 
 ## Introduction
@@ -19,11 +19,11 @@ Traditional React portals require the target DOM element to exist before renderi
 - **Dynamic DOM manipulation** - Third-party scripts or frameworks modify the DOM structure continuously
 - **Uncertain timing** - You can't predict when or if target elements will be available
 
-React Dynamic Portal solves these challenges by automatically detecting when target elements appear or disappear in the DOM, ensuring your React components are always rendered in the right place at the right time.
+React Magic Portal solves these challenges by automatically detecting when target elements appear or disappear in the DOM, ensuring your React components are always rendered in the right place at the right time.
 
 ## Features
 
-- **Dynamic Anchor Detection** - Automatically detects when target elements appear or disappear in the DOM
+- **Magic Anchor Detection** - Automatically detects when target elements appear or disappear in the DOM
 - **Multiple Positioning Options** - Support for `append`, `prepend`, `before`, and `after` positioning
 - **Flexible Anchor Selection** - Support for CSS selectors, element references, functions, and direct elements
 - **Lifecycle Callbacks** - `onMount` and `onUnmount` callbacks for portal lifecycle management
@@ -31,26 +31,26 @@ React Dynamic Portal solves these challenges by automatically detecting when tar
 
 ## Usage
 
-### Dynamic Content Loading
+### Magic Content Loading
 
 ```jsx
-function DynamicContent() {
+function MagicContent() {
   const [showTarget, setShowTarget] = useState(false)
 
   return (
     <div>
       <button onClick={() => setShowTarget(!showTarget)}>Toggle Target</button>
 
-      {showTarget && <div id="dynamic-target">Dynamic Target Element</div>}
+      {showTarget && <div id="anchor-target">Magic Target Element</div>}
 
       {/* Portal will automatically mount/unmount based on target availability */}
-      <DynamicPortal
-        anchor="#dynamic-target"
+      <MagicPortal
+        anchor="#anchor-target"
         onMount={() => console.log('Portal mounted')}
         onUnmount={() => console.log('Portal unmounted')}
       >
         <div>This content follows the target element</div>
-      </DynamicPortal>
+      </MagicPortal>
     </div>
   )
 }
@@ -64,21 +64,21 @@ function MultiplePortals() {
     <div>
       <div id="target">Target Element</div>
 
-      <DynamicPortal anchor="#target" position="before">
+      <MagicPortal anchor="#target" position="before">
         <div>Content before target</div>
-      </DynamicPortal>
+      </MagicPortal>
 
-      <DynamicPortal anchor="#target" position="prepend">
+      <MagicPortal anchor="#target" position="prepend">
         <div>Content at start of target</div>
-      </DynamicPortal>
+      </MagicPortal>
 
-      <DynamicPortal anchor="#target" position="append">
+      <MagicPortal anchor="#target" position="append">
         <div>Content at end of target</div>
-      </DynamicPortal>
+      </MagicPortal>
 
-      <DynamicPortal anchor="#target" position="after">
+      <MagicPortal anchor="#target" position="after">
         <div>Content after target</div>
-      </DynamicPortal>
+      </MagicPortal>
     </div>
   )
 }
@@ -103,13 +103,13 @@ function MultiplePortals() {
 #### CSS Selector String
 
 ```jsx
-<DynamicPortal anchor="#my-element">
+<MagicPortal anchor="#my-element">
   <div>Content</div>
-</DynamicPortal>
+</MagicPortal>
 
-<DynamicPortal anchor=".my-class">
+<MagicPortal anchor=".my-class">
   <div>Content</div>
-</DynamicPortal>
+</MagicPortal>
 ```
 
 #### Element Reference
@@ -118,25 +118,25 @@ function MultiplePortals() {
 const elementRef = useRef(null)
 
 <div ref={elementRef}>Target</div>
-<DynamicPortal anchor={elementRef}>
+<MagicPortal anchor={elementRef}>
   <div>Content</div>
-</DynamicPortal>
+</MagicPortal>
 ```
 
 #### Function
 
 ```jsx
-<DynamicPortal anchor={() => document.querySelector('.dynamic-element')}>
+<MagicPortal anchor={() => document.querySelector('.magic-element')}>
   <div>Content</div>
-</DynamicPortal>
+</MagicPortal>
 ```
 
 #### Direct Element
 
 ```jsx
-<DynamicPortal anchor={document.body}>
+<MagicPortal anchor={document.body}>
   <div>Content</div>
-</DynamicPortal>
+</MagicPortal>
 ```
 
 ### Position Options

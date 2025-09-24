@@ -15,7 +15,7 @@
   "author": "molvqingtai",
   "license": "MIT",
   "dependencies": {
-    "react-dynamic-portal": "workspace:*"
+    "react-magic-portal": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
