@@ -48,8 +48,8 @@ describe('MagicPortal', () => {
         return (
           <div>
             <button onClick={() => setShowAnchor(true)}>Show Anchor</button>
-            {showAnchor && <div id="magic-anchor">Anchor</div>}
-            <MagicPortal anchor="#magic-anchor">
+            {showAnchor && <div id="dynamic-anchor">Anchor</div>}
+            <MagicPortal anchor="#dynamic-anchor">
               <div data-testid="portal-content">Portal Content</div>
             </MagicPortal>
           </div>
@@ -75,8 +75,8 @@ describe('MagicPortal', () => {
         return (
           <div>
             <button onClick={() => setShowAnchor(false)}>Hide Anchor</button>
-            {showAnchor && <div id="magic-anchor">Anchor</div>}
-            <MagicPortal anchor="#magic-anchor">
+            {showAnchor && <div id="dynamic-anchor">Anchor</div>}
+            <MagicPortal anchor="#dynamic-anchor">
               <div data-testid="portal-content">Portal Content</div>
             </MagicPortal>
           </div>
@@ -382,14 +382,14 @@ describe('MagicPortal', () => {
     })
   })
 
-  describe('Magic Content Updates', () => {
+  describe('Dynamic Content Updates', () => {
     it('should detect when matching elements are added to DOM', async () => {
       function TestComponent() {
         const [elementCount, setElementCount] = useState(0)
 
         const addElement = () => {
           const newElement = document.createElement('div')
-          newElement.className = 'magic-target'
+          newElement.className = 'dynamic-target'
           newElement.textContent = `Target ${elementCount + 1}`
           document.body.appendChild(newElement)
           setElementCount((prev) => prev + 1)
@@ -398,7 +398,7 @@ describe('MagicPortal', () => {
         return (
           <div>
             <button onClick={addElement}>Add Target Element</button>
-            <MagicPortal anchor=".magic-target">
+            <MagicPortal anchor=".dynamic-target">
               <div data-testid="portal-content">Portal Content</div>
             </MagicPortal>
           </div>
