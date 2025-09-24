@@ -108,12 +108,12 @@ function MultiplePortals() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `anchor` | `string | (() => Element | null) | Element | React.RefObject<Element | null> | null` | **Required** | The target element where the portal content will be rendered |
-| `position` | `'append' | 'prepend' | 'before' | 'after'` | `'append'` | Position relative to the anchor element |
+| `anchor` | `string \| (() => Element \| null) \| Element \| React.RefObject<Element \| null> \| null` | **Required** | The target element where the portal content will be rendered |
+| `position` | `'append' \| 'prepend' \| 'before' \| 'after'` | `'append'` | Position relative to the anchor element |
 | `children` | `React.ReactNode` | **Required** | The content to render in the portal |
 | `onMount` | `(anchor: Element, portal: HTMLDivElement) => void` | `undefined` | Callback fired when the portal is mounted |
 | `onUnmount` | `(anchor: Element, portal: HTMLDivElement) => void` | `undefined` | Callback fired when the portal is unmounted |
-| `ref` | `React.Ref<HTMLDivElement | null>` | `undefined` | Ref to the portal container element |
+| `ref` | `React.Ref<HTMLDivElement \| null>` | `undefined` | Ref to the portal container element |
 | `key` | `React.Key` | `undefined` | Key for the ReactDOM.createPortal |
 
 ### Anchor Types
