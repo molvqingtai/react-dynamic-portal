@@ -4,7 +4,9 @@ A React component designed for browser extension development that provides dynam
 
 [![version](https://img.shields.io/github/v/release/molvqingtai/react-dynamic-portal)](https://www.npmjs.com/package/react-dynamic-portal) [![workflow](https://github.com/molvqingtai/react-dynamic-portal/actions/workflows/ci.yml/badge.svg)](https://github.com/molvqingtai/react-dynamic-portal/actions) [![download](https://img.shields.io/npm/dt/react-dynamic-portal)](https://www.npmjs.com/package/react-dynamic-portal) [![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/react-dynamic-portal)](https://www.npmjs.com/package/react-dynamic-portal) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/molvqingtai/react-dynamic-portal)
 
-
+```bash
+$ pnpm add react-dynamic-portal
+```
 
 ## Introduction
 
@@ -19,8 +21,6 @@ Traditional React portals require the target DOM element to exist before renderi
 
 React Dynamic Portal solves these challenges by automatically detecting when target elements appear or disappear in the DOM, ensuring your React components are always rendered in the right place at the right time.
 
-
-
 ## Features
 
 - **Dynamic Anchor Detection** - Automatically detects when target elements appear or disappear in the DOM
@@ -28,16 +28,6 @@ React Dynamic Portal solves these challenges by automatically detecting when tar
 - **Flexible Anchor Selection** - Support for CSS selectors, element references, functions, and direct elements
 - **Lifecycle Callbacks** - `onMount` and `onUnmount` callbacks for portal lifecycle management
 - **TypeScript Support** - Full TypeScript support with comprehensive type definitions
-
-
-
-## Installation
-
-```bash
-$ pnpm add react-dynamic-portal
-```
-
-
 
 ## Usage
 
@@ -49,15 +39,9 @@ function DynamicContent() {
 
   return (
     <div>
-      <button onClick={() => setShowTarget(!showTarget)}>
-        Toggle Target
-      </button>
+      <button onClick={() => setShowTarget(!showTarget)}>Toggle Target</button>
 
-      {showTarget && (
-        <div id="dynamic-target">
-          Dynamic Target Element
-        </div>
-      )}
+      {showTarget && <div id="dynamic-target">Dynamic Target Element</div>}
 
       {/* Portal will automatically mount/unmount based on target availability */}
       <DynamicPortal
@@ -100,25 +84,24 @@ function MultiplePortals() {
 }
 ```
 
-
-
 ## API Reference
 
 ### Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `anchor` | `string \| (() => Element \| null) \| Element \| React.RefObject<Element \| null> \| null` | **Required** | The target element where the portal content will be rendered |
-| `position` | `'append' \| 'prepend' \| 'before' \| 'after'` | `'append'` | Position relative to the anchor element |
-| `children` | `React.ReactNode` | **Required** | The content to render in the portal |
-| `onMount` | `(anchor: Element, container: HTMLDivElement) => void` | `undefined` | Callback fired when the portal is mounted |
-| `onUnmount` | `(anchor: Element, container: HTMLDivElement) => void` | `undefined` | Callback fired when the portal is unmounted |
-| `ref` | `React.Ref<HTMLDivElement \| null>` | `undefined` | Ref to the portal container element |
-| `key` | `React.Key` | `undefined` | Key for the ReactDOM.createPortal |
+| Prop        | Type                                                                                       | Default      | Description                                                  |
+| ----------- | ------------------------------------------------------------------------------------------ | ------------ | ------------------------------------------------------------ |
+| `anchor`    | `string \| (() => Element \| null) \| Element \| React.RefObject<Element \| null> \| null` | **Required** | The target element where the portal content will be rendered |
+| `position`  | `'append' \| 'prepend' \| 'before' \| 'after'`                                             | `'append'`   | Position relative to the anchor element                      |
+| `children`  | `React.ReactNode`                                                                          | **Required** | The content to render in the portal                          |
+| `onMount`   | `(anchor: Element, container: HTMLDivElement) => void`                                     | `undefined`  | Callback fired when the portal is mounted                    |
+| `onUnmount` | `(anchor: Element, container: HTMLDivElement) => void`                                     | `undefined`  | Callback fired when the portal is unmounted                  |
+| `ref`       | `React.Ref<HTMLDivElement \| null>`                                                        | `undefined`  | Ref to the portal container element                          |
+| `key`       | `React.Key`                                                                                | `undefined`  | Key for the ReactDOM.createPortal                            |
 
 ### Anchor Types
 
 #### CSS Selector String
+
 ```jsx
 <DynamicPortal anchor="#my-element">
   <div>Content</div>
@@ -130,6 +113,7 @@ function MultiplePortals() {
 ```
 
 #### Element Reference
+
 ```jsx
 const elementRef = useRef(null)
 
@@ -140,6 +124,7 @@ const elementRef = useRef(null)
 ```
 
 #### Function
+
 ```jsx
 <DynamicPortal anchor={() => document.querySelector('.dynamic-element')}>
   <div>Content</div>
@@ -147,6 +132,7 @@ const elementRef = useRef(null)
 ```
 
 #### Direct Element
+
 ```jsx
 <DynamicPortal anchor={document.body}>
   <div>Content</div>
@@ -156,7 +142,9 @@ const elementRef = useRef(null)
 ### Position Options
 
 #### `append` (default)
+
 Adds content inside the anchor element at the end:
+
 ```html
 <div id="anchor">
   Existing content
@@ -165,7 +153,9 @@ Adds content inside the anchor element at the end:
 ```
 
 #### `prepend`
+
 Adds content inside the anchor element at the beginning:
+
 ```html
 <div id="anchor">
   <!-- Portal content appears here -->
@@ -174,20 +164,22 @@ Adds content inside the anchor element at the beginning:
 ```
 
 #### `before`
+
 Adds content as a sibling before the anchor element:
+
 ```html
 <!-- Portal content appears here -->
 <div id="anchor">Existing content</div>
 ```
 
 #### `after`
+
 Adds content as a sibling after the anchor element:
+
 ```html
 <div id="anchor">Existing content</div>
 <!-- Portal content appears here -->
 ```
-
-
 
 ## License
 
