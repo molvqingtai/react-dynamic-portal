@@ -8,6 +8,7 @@
     "dev": "pnpm --filter react-magic-portal dev",
     "build": "pnpm --filter react-magic-portal build",
     "dev:example": "pnpm --filter example dev",
+    "build:example": "pnpm --filter example build",
     "lint": "npm-run-all -p lint:*",
     "check": "npm-run-all -p check:*",
     "test": "pnpm --filter __tests__ test",

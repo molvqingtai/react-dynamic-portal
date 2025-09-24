@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 .eslintcache
+*.tsbuildinfo
+
+# Exceptions
+!packages/example/dist
 
 # Editor directories and files
 .vscode/*
