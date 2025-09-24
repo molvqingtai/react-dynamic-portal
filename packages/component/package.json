@@ -42,7 +42,6 @@
     "url": "https://github.com/molvqingtai/react-dynamic-portal/issues"
   },
   "homepage": "https://github.com/molvqingtai/react-dynamic-portal#readme",
-  "packageManager": "pnpm@10.5.2",
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
