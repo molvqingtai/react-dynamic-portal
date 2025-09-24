@@ -8,6 +8,8 @@ A React component designed for browser extension development that provides react
 $ pnpm add react-magic-portal
 ```
 
+**[View Demo](https://molvqingtai.github.io/react-magic-portal/packages/example/dist/index.html)**
+
 ## Introduction
 
 When developing browser extensions with React, you often need to inject React components into host web pages. However, the target mounting points in these pages are frequently dynamic - they may not exist when your extension loads, or they might be created and destroyed as users navigate and interact with the page.
@@ -28,6 +30,9 @@ React Magic Portal solves these challenges by automatically detecting when targe
 - **Flexible Anchor Selection** - Support for CSS selectors, element references, functions, and direct elements
 - **Lifecycle Callbacks** - `onMount` and `onUnmount` callbacks for portal lifecycle management
 - **TypeScript Support** - Full TypeScript support with comprehensive type definitions
+
+
+
 
 ## Usage
 
