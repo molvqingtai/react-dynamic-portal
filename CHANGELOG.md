@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.1...v1.1.2) (2025-09-24)
+
+
+### Performance Improvements
+
+* add data-magic-portal attribute ([3c3143b](https://github.com/molvqingtai/react-magic-portal/commit/3c3143be2b5d539fdbbba6bb73a006bfd133e679))
+* add data-magic-portal attribute ([74c132e](https://github.com/molvqingtai/react-magic-portal/commit/74c132ecfc37b56102623e75ad2351b167cad7a0))
+
 ## [1.1.1](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.0...v1.1.1) (2025-09-24)
 
 
