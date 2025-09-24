@@ -1,6 +1,6 @@
 # React Magic Portal
 
-A React component designed for browser extension development that provides dynamic portal functionality with automatic anchor detection and DOM mutation monitoring.
+A React component designed for browser extension development that provides react portal  functionality with automatic anchor detection and DOM mutation monitoring.
 
 [![version](https://img.shields.io/github/v/release/molvqingtai/react-magic-portal)](https://www.npmjs.com/package/react-magic-portal) [![workflow](https://github.com/molvqingtai/react-magic-portal/actions/workflows/ci.yml/badge.svg)](https://github.com/molvqingtai/react-magic-portal/actions) [![download](https://img.shields.io/npm/dt/react-magic-portal)](https://www.npmjs.com/package/react-magic-portal) [![npm package minimized gzipped size](https://img.shields.io/bundlejs/size/react-magic-portal)](https://www.npmjs.com/package/react-magic-portal) [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/molvqingtai/react-magic-portal)
 
@@ -41,11 +41,11 @@ function DynamicContent() {
     <div>
       <button onClick={() => setShowTarget(!showTarget)}>Toggle Target</button>
 
-      {showTarget && <div id="dynamic-target">Dynamic Target Element</div>}
+      {showTarget && <div id="anchor-target">Dynamic Target Element</div>}
 
       {/* Portal will automatically mount/unmount based on target availability */}
       <MagicPortal
-        anchor="#dynamic-target"
+        anchor="#anchor-target"
         onMount={() => console.log('Portal mounted')}
         onUnmount={() => console.log('Portal unmounted')}
       >
@@ -103,11 +103,11 @@ function MultiplePortals() {
 #### CSS Selector String
 
 ```jsx
-<MagicPortal anchor="#my-element">
+<MagicPortal anchor="#anchor-id">
   <div>Content</div>
 </MagicPortal>
 
-<MagicPortal anchor=".my-class">
+<MagicPortal anchor=".anchor-class">
   <div>Content</div>
 </MagicPortal>
 ```
@@ -126,7 +126,7 @@ const elementRef = useRef(null)
 #### Function
 
 ```jsx
-<MagicPortal anchor={() => document.querySelector('.dynamic-element')}>
+<MagicPortal anchor={() => document.querySelector('.anchor')}>
   <div>Content</div>
 </MagicPortal>
 ```
