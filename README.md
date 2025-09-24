@@ -39,7 +39,9 @@ React Magic Portal solves these challenges by automatically detecting when targe
 ### Dynamic Content Loading
 
 ```jsx
-function DynamicContent() {
+import MagicPortal from 'react-magic-portal'
+
+function App() {
   const [showTarget, setShowTarget] = useState(false)
 
   return (
@@ -64,7 +66,9 @@ function DynamicContent() {
 ### Multiple Portals on Same Anchor
 
 ```jsx
-function MultiplePortals() {
+import MagicPortal from 'react-magic-portal'
+
+function App() {
   return (
     <div>
       <div id="target">Target Element</div>
