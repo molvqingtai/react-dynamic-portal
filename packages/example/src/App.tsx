@@ -18,7 +18,7 @@ function App() {
     <div className="app">
       <h1>MagicPortal Example</h1>
 
-      <h2>Target Anchor</h2>
+      <h2>Example</h2>
       <div className="portal-preview">
         {showAnchor && (
           <div className="dynamic-anchor" id="dynamic-anchor">
