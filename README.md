@@ -101,10 +101,9 @@ function App() {
 | ----------- | ------------------------------------------------------------------------------------------ | ------------ | ------------------------------------------------------------ |
 | `anchor`    | `string \| (() => Element \| null) \| Element \| React.RefObject<Element \| null> \| null` | **Required** | The target element where the portal content will be rendered |
 | `position`  | `'append' \| 'prepend' \| 'before' \| 'after'`                                             | `'append'`   | Position relative to the anchor element                      |
-| `children`  | `React.ReactNode`                                                                          | **Required** | The content to render in the portal                          |
-| `onMount`   | `(anchor: Element, container: HTMLDivElement) => void`                                     | `undefined`  | Callback fired when the portal is mounted                    |
-| `onUnmount` | `(anchor: Element, container: HTMLDivElement) => void`                                     | `undefined`  | Callback fired when the portal is unmounted                  |
-| `ref`       | `React.Ref<HTMLDivElement \| null>`                                                        | `undefined`  | Ref to the portal container element                          |
+| `children`  | `React.ReactElement \| React.ReactElement[]`                                               | `undefined`  | The content to render in the portal                          |
+| `onMount`   | `(anchor: Element, container: Element) => void`                                            | `undefined`  | Callback fired when the portal is mounted                    |
+| `onUnmount` | `(anchor: Element, container: Element) => void`                                            | `undefined`  | Callback fired when the portal is unmounted                  |
 | `key`       | `React.Key`                                                                                | `undefined`  | Key for the ReactDOM.createPortal                            |
 
 ### Anchor Types

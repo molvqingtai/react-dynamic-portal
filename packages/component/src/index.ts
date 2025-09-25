@@ -1,102 +1,108 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import React, { useEffect, useState, useRef, useCallback, useLayoutEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 export interface MagicPortalProps {
   anchor: string | (() => Element | null) | Element | React.RefObject<Element | null> | null
   position?: 'append' | 'prepend' | 'before' | 'after'
-  children: React.ReactNode
-  onMount?: (anchor: Element, container: HTMLDivElement) => void
-  onUnmount?: (anchor: Element, container: HTMLDivElement) => void
-  ref?: React.Ref<HTMLDivElement | null>
+  children?: React.ReactElement | React.ReactElement[]
+  onMount?: (anchor: Element, container: Element) => void
+  onUnmount?: (anchor: Element, container: Element) => void
   key?: React.Key
 }
 
-const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount, ref, key }: MagicPortalProps) => {
-  const [container, setContainer] = useState<HTMLDivElement | null>(null)
-  const anchorRef = useRef<Element | null>(null)
+/**
+ * https://github.com/radix-ui/primitives/blob/36d954d3c1b41c96b1d2e875b93fc9362c8c09e6/packages/react/slot/src/slot.tsx#L166
+ */
+const getElementRef = (element: React.ReactElement) => {
+  // React <=18 in DEV
+  let getter = Object.getOwnPropertyDescriptor(element.props, 'ref')?.get
+  let mayWarn = getter && 'isReactWarning' in getter && getter.isReactWarning
+  if (mayWarn) {
+    return (element as any).ref as React.Ref<Element>
+  }
+  // React 19 in DEV
+  getter = Object.getOwnPropertyDescriptor(element, 'ref')?.get
+  mayWarn = getter && 'isReactWarning' in getter && getter.isReactWarning
+  if (mayWarn) {
+    return (element.props as { ref?: React.Ref<Element> }).ref
+  }
 
-  const updateRef = useCallback(
-    (element: HTMLDivElement | null) => {
-      if (ref) {
-        if (typeof ref === 'function') {
-          ref(element)
-        } else {
-          ref.current = element
-        }
+  // Not DEV
+  return (element.props as { ref?: React.Ref<Element> }).ref || ((element as any).ref as React.Ref<Element>)
+}
+
+const resolveAnchor = (anchor: MagicPortalProps['anchor']) => {
+  if (typeof anchor === 'string') {
+    return document.querySelector(anchor)
+  } else if (typeof anchor === 'function') {
+    return anchor()
+  } else if (anchor && 'current' in anchor) {
+    return anchor.current
+  } else {
+    return anchor
+  }
+}
+
+const mergeRef = <T extends Element | null>(...refs: (React.Ref<T> | undefined)[]) => {
+  return (node: T) =>
+    refs.forEach((ref) => {
+      if (typeof ref === 'function') {
+        ref(node)
+      } else if (ref) {
+        ref.current = node
       }
-    },
-    [ref]
-  )
-
-  const createContainer = useCallback(
-    (anchorElement: Element): HTMLDivElement | null => {
-      const container = document.createElement('div')
-      container.dataset.magicPortal = 'true'
-      container.style = 'display: contents !important;'
-
-      const positionMap = {
-        before: 'beforebegin',
-        prepend: 'afterbegin',
-        append: 'beforeend',
-        after: 'afterend'
-      } as const
-
-      const result = anchorElement.insertAdjacentElement(positionMap[position], container)
-
-      return result as HTMLDivElement | null
-    },
-    [position]
-  )
-
-  const resolveAnchor = useCallback((): Element | null => {
-    if (typeof anchor === 'string') {
-      return document.querySelector(anchor)
-    } else if (typeof anchor === 'function') {
-      return anchor()
-    } else if (anchor && 'current' in anchor) {
-      return anchor.current
-    } else {
-      return anchor
-    }
-  }, [anchor])
-
-  const updateAnchor = useCallback(() => {
-    const newAnchor = resolveAnchor()
-
-    setContainer((prevContainer) => {
-      prevContainer?.remove()
-      anchorRef.current = newAnchor
-      const newContainer = newAnchor ? createContainer(newAnchor) : null
-      updateRef(newContainer)
-      return newContainer
     })
-  }, [resolveAnchor, createContainer, updateRef])
+}
 
-  useEffect(() => {
-    updateAnchor()
+const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount, key }: MagicPortalProps) => {
+  const anchorRef = useRef<Element | null>(null)
+  const [container, setContainer] = useState<Element | null>(null)
+
+  const nodes = React.Children.map(children, (item) => {
+    if (!React.isValidElement(item)) {
+      return null
+    }
+    const originalRef = getElementRef(item)
+    return React.cloneElement(item as React.ReactElement<any>, {
+      ref: mergeRef(originalRef, (node: Element | null) => {
+        const positionMap = {
+          before: 'beforebegin',
+          prepend: 'afterbegin',
+          append: 'beforeend',
+          after: 'afterend'
+        } as const
+        node && anchorRef.current?.insertAdjacentElement(positionMap[position], node)
+      })
+    })
+  })
+
+  const update = useCallback(() => {
+    anchorRef.current = resolveAnchor(anchor)
+    const container =
+      position === 'prepend' || position === 'append' ? anchorRef.current : (anchorRef.current?.parentElement ?? null)
+    setContainer(container)
+  }, [anchor, position])
+
+  useLayoutEffect(() => {
+    update()
 
     const observer = new MutationObserver((mutations) => {
       const shouldUpdate = mutations.some((mutation) => {
         const { addedNodes, removedNodes } = mutation
-
         // Check if current anchor is removed
         if (anchorRef.current && Array.from(removedNodes).includes(anchorRef.current)) {
           return true
         }
-
         // Only check added nodes when anchor is a string selector
-        if (typeof anchor === 'string') {
-          return Array.from(addedNodes).some(
-            (node) => node.nodeType === Node.ELEMENT_NODE && node instanceof Element && node.matches?.(anchor)
-          )
+        if (
+          typeof anchor === 'string' &&
+          [...addedNodes].some((node) => node instanceof Element && node.matches?.(anchor))
+        ) {
+          return true
         }
-
         return false
       })
-
-      if (shouldUpdate) {
-        updateAnchor()
-      }
+      shouldUpdate && update()
     })
 
     observer.observe(document.body, {
@@ -105,18 +111,18 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
     })
 
     return () => observer.disconnect()
-  }, [updateAnchor, anchor])
+  }, [update, anchor])
 
   useEffect(() => {
-    if (anchorRef.current && container) {
+    if (container && anchorRef.current) {
       onMount?.(anchorRef.current, container)
       return () => {
         onUnmount?.(anchorRef.current!, container)
       }
     }
-  }, [container, onMount, onUnmount])
+  }, [onMount, onUnmount, container])
 
-  return container ? ReactDOM.createPortal(children, container, key) : null
+  return container && ReactDOM.createPortal(nodes, container, key)
 }
 
 MagicPortal.displayName = 'MagicPortal'

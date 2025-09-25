@@ -7,8 +7,11 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default defineConfig([
-  { files: ['**/*.{js,mjs,cjs,ts}'] },
   {
+    ignores: ['**/dist/*']
+  },
+  {
+    files: ['**/*.{js,mjs,cjs,ts}'],
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
       parserOptions: { project: './tsconfig.json', tsconfigRootDir: import.meta.dirname }
@@ -20,6 +23,8 @@ export default defineConfig([
   reactHooks.configs['recommended-latest'],
   reactRefresh.configs.vite,
   {
-    ignores: ['**/dist/*']
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
   }
 ])

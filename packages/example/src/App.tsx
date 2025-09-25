@@ -4,14 +4,14 @@ import PortalContent from './components/portal-content'
 import './App.css'
 
 function App() {
-  const [showAnchor, setShowAnchor] = useState(false)
+  const [showAnchor, setShowAnchor] = useState(true)
 
-  const handleMount = (anchor: Element, portal: HTMLElement) => {
-    console.log('Portal mounted:', { anchor, portal })
+  const handleMount = (anchor: Element, contaner: Element) => {
+    console.log('Portal mounted:', { anchor, contaner })
   }
 
-  const handleUnmount = (anchor: Element, portal: HTMLElement) => {
-    console.log('Portal unmounted:', { anchor, portal })
+  const handleUnmount = (anchor: Element, contaner: Element) => {
+    console.log('Portal unmounted:', { anchor, contaner })
   }
 
   return (
