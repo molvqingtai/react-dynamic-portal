@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.2...v1.1.3) (2025-09-25)
+
+
+### Performance Improvements
+
+* create a clean portal, remove transparent container ([80765ac](https://github.com/molvqingtai/react-magic-portal/commit/80765acd2084430ae0f4559f4e99b07fc6a02451))
+
 ## [1.1.2](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.1...v1.1.2) (2025-09-24)
 
 
