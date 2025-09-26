@@ -257,9 +257,9 @@ const MyComponent = () => {
   return <div>My Component Content</div>
 }
 
-// Wrap the component in a DOM element
+// Wrap the component in a transparent DOM element
 <MagicPortal anchor="#target">
-  <div>
+  <div style={{ display: 'contents' }}>
     <MyComponent />
   </div>
 </MagicPortal>
