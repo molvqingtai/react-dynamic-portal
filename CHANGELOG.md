@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.4...v1.1.5) (2025-09-26)
+
+
+### Performance Improvements
+
+* expand the anchor point mutation detection range ([110229f](https://github.com/molvqingtai/react-magic-portal/commit/110229f438cff2674625ab49438b9cb41eab76ee))
+
 ## [1.1.4](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.3...v1.1.4) (2025-09-26)
 
 
