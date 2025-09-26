@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.3...v1.1.4) (2025-09-26)
+
+
+### Performance Improvements
+
+* add ref forward notes ([4e36266](https://github.com/molvqingtai/react-magic-portal/commit/4e36266df2724c2c463e8877fd9d424c796aa6da))
+
 ## [1.1.3](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.2...v1.1.3) (2025-09-25)
 
 
