@@ -11,7 +11,7 @@ export default defineConfig([
     ignores: ['**/dist/*']
   },
   {
-    files: ['**/*.{js,mjs,cjs,ts}'],
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
       parserOptions: { project: './tsconfig.json', tsconfigRootDir: import.meta.dirname }
