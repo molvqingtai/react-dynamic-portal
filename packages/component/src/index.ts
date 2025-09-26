@@ -87,31 +87,18 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
     update()
 
     const observer = new MutationObserver((mutations) => {
-      const shouldUpdate = mutations.some((mutation) => {
-        const { addedNodes, removedNodes } = mutation
-        // Check if current anchor is removed
-        if (anchorRef.current && [...removedNodes].includes(anchorRef.current)) {
-          return true
-        }
-        // Only check added nodes when anchor is a string selector
-        if (
-          typeof anchor === 'string' &&
-          [...addedNodes].some((node) => node instanceof Element && node.matches?.(anchor))
-        ) {
-          return true
-        }
-        return false
-      })
-      shouldUpdate && update()
+      const isSelfMutation = mutations
+        .flatMap(({ addedNodes, removedNodes }) => [...addedNodes, ...removedNodes])
+        .some((node) => container?.contains(node))
+      !isSelfMutation && update()
     })
 
     observer.observe(document.body, {
       childList: true,
       subtree: true
     })
-
     return () => observer.disconnect()
-  }, [update, anchor])
+  }, [update, anchor, container])
 
   useEffect(() => {
     if (container && anchorRef.current) {
