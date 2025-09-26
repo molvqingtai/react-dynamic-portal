@@ -265,13 +265,6 @@ const MyComponent = () => {
 </MagicPortal>
 ```
 
-### Browser Extension Development Tips
-
-- **Test dynamic content scenarios** - Many web pages load content asynchronously
-- **Handle multiple SPA navigation** - Single Page Applications may recreate elements frequently
-- **Monitor for anchor disappearance** - Use `onUnmount` callback to handle cleanup
-- **Use specific selectors** - Avoid overly generic CSS selectors that might match unintended elements
-
 ## License
 
 MIT © [molvqingtai](https://github.com/molvqingtai)
