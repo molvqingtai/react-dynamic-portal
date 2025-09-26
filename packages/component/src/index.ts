@@ -78,9 +78,9 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
 
   const update = useCallback(() => {
     anchorRef.current = resolveAnchor(anchor)
-    const container =
+    setContainer(
       position === 'prepend' || position === 'append' ? anchorRef.current : (anchorRef.current?.parentElement ?? null)
-    setContainer(container)
+    )
   }, [anchor, position])
 
   useLayoutEffect(() => {
@@ -90,7 +90,7 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
       const shouldUpdate = mutations.some((mutation) => {
         const { addedNodes, removedNodes } = mutation
         // Check if current anchor is removed
-        if (anchorRef.current && Array.from(removedNodes).includes(anchorRef.current)) {
+        if (anchorRef.current && [...removedNodes].includes(anchorRef.current)) {
           return true
         }
         // Only check added nodes when anchor is a string selector
