@@ -64,7 +64,7 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
     }
     const originalRef = getElementRef(item)
     return React.cloneElement(item as React.ReactElement<any>, {
-      ref: mergeRef(originalRef, (node: Element | null) => {
+      ref: mergeRef(originalRef, (node) => {
         const positionMap = {
           before: 'beforebegin',
           prepend: 'afterbegin',

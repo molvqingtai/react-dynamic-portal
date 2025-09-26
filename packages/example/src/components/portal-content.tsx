@@ -2,9 +2,10 @@ import { useEffect } from 'react'
 
 interface PortalContentProps {
   position: string
+  ref?: React.Ref<HTMLDivElement>
 }
 
-function PortalContent({ position }: PortalContentProps) {
+function PortalContent({ position, ref }: PortalContentProps) {
   useEffect(() => {
     console.log(`✅ ${position} Portal useEffect mounted`)
     return () => {
@@ -27,7 +28,11 @@ function PortalContent({ position }: PortalContentProps) {
     }
   }
 
-  return <div className={`portal-content ${position}`}>{getContentText()}</div>
+  return (
+    <div ref={ref} className={`portal-content ${position}`}>
+      {getContentText()}
+    </div>
+  )
 }
 
 export default PortalContent

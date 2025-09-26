@@ -190,6 +190,88 @@ Adds content as a sibling after the anchor element:
 <!-- Portal content appears here -->
 ```
 
+## Important Notes
+
+### React Component Ref Requirements
+
+When using React components as children, they **must** support ref forwarding to work correctly with MagicPortal. This is because MagicPortal needs to access the underlying DOM element to position it correctly.
+
+#### ✅ Works - Components with ref props (React 19+)
+
+```jsx
+interface MyComponentProps {
+  ref?: React.Ref<HTMLDivElement>
+}
+
+const MyComponent = ({ ref, ...props }: MyComponentProps) => {
+  return <div ref={ref}>My Component Content</div>
+}
+
+// This will work correctly
+<MagicPortal anchor="#target">
+  <MyComponent />
+</MagicPortal>
+```
+
+#### ✅ Works - Components with forwardRef (React 18 and earlier)
+
+```jsx
+import { forwardRef } from 'react'
+
+const MyComponent = forwardRef<HTMLDivElement>((props, ref) => {
+  return <div ref={ref}>My Component Content</div>
+})
+
+// This will work correctly
+<MagicPortal anchor="#target">
+  <MyComponent />
+</MagicPortal>
+```
+
+#### ✅ Works - Direct DOM elements
+
+```jsx
+// Direct DOM elements always work
+<MagicPortal anchor="#target">
+  <div>Direct DOM element</div>
+</MagicPortal>
+```
+
+#### ❌ Won't work - Components without ref support
+
+```jsx
+const MyComponent = () => {
+  return <div>My Component Content</div>
+}
+
+// This won't position correctly because ref cannot be passed to the component
+<MagicPortal anchor="#target">
+  <MyComponent />
+</MagicPortal>
+```
+
+#### ✅ Solution - Wrap with DOM element
+
+```jsx
+const MyComponent = () => {
+  return <div>My Component Content</div>
+}
+
+// Wrap the component in a DOM element
+<MagicPortal anchor="#target">
+  <div>
+    <MyComponent />
+  </div>
+</MagicPortal>
+```
+
+### Browser Extension Development Tips
+
+- **Test dynamic content scenarios** - Many web pages load content asynchronously
+- **Handle multiple SPA navigation** - Single Page Applications may recreate elements frequently
+- **Monitor for anchor disappearance** - Use `onUnmount` callback to handle cleanup
+- **Use specific selectors** - Avoid overly generic CSS selectors that might match unintended elements
+
 ## License
 
 MIT © [molvqingtai](https://github.com/molvqingtai)
