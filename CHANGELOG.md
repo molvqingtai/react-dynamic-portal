@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.5...v1.1.6) (2025-09-27)
+
+
+### Bug Fixes
+
+* support Cleanup functions for refs ([a31b2cb](https://github.com/molvqingtai/react-magic-portal/commit/a31b2cb6323b1fc2d38836ec22ef99c9456901e2))
+
 ## [1.1.5](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.4...v1.1.5) (2025-09-26)
 
 
