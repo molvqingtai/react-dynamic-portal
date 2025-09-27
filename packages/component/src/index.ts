@@ -43,15 +43,23 @@ const resolveAnchor = (anchor: MagicPortalProps['anchor']) => {
   }
 }
 
+/**
+ * https://github.com/facebook/react/blob/d91d28c8ba6fe7c96e651f82fc47c9d5481bf5f9/packages/react-reconciler/src/ReactFiberHooks.js#L2792
+ */
+const setRef = <T>(ref: React.Ref<T> | undefined, value: T) => {
+  if (typeof ref === 'function') {
+    return ref(value)
+  } else if (ref !== null && ref !== undefined) {
+    ref.current = value
+  }
+}
+
 const mergeRef = <T extends Element | null>(...refs: (React.Ref<T> | undefined)[]) => {
-  return (node: T) =>
-    refs.forEach((ref) => {
-      if (typeof ref === 'function') {
-        ref(node)
-      } else if (ref) {
-        ref.current = node
-      }
-    })
+  return (node: T) => {
+    const cleanups = refs.map((ref) => setRef(ref, node))
+    return () =>
+      cleanups.forEach((cleanup, index) => (typeof cleanup === 'function' ? cleanup() : setRef(refs[index], null)))
+  }
 }
 
 const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount, key }: MagicPortalProps) => {

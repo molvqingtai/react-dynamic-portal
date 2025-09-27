@@ -768,4 +768,27 @@ describe('MagicPortal', () => {
       expect(screen.queryByTestId('portal-content')).toBeNull()
     })
   })
+  it('should call ref cleanup function on unmount', () => {
+    const cleanupFn = vi.fn()
+    // React 19: Cleanup functions for refs
+    const customRef = () => () => cleanupFn()
+
+    const anchor = document.createElement('div')
+    anchor.id = 'cleanup-ref-anchor'
+    document.body.appendChild(anchor)
+
+    const { unmount } = render(
+      <MagicPortal anchor="#cleanup-ref-anchor">
+        <div ref={customRef} data-testid="portal-content">
+          Portal Content
+        </div>
+      </MagicPortal>
+    )
+
+    expect(screen.getByTestId('portal-content')).toBeTruthy()
+
+    unmount()
+
+    expect(cleanupFn).toHaveBeenCalledTimes(1)
+  })
 })

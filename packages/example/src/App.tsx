@@ -6,12 +6,12 @@ import './App.css'
 function App() {
   const [showAnchor, setShowAnchor] = useState(true)
 
-  const handleMount = (anchor: Element, contaner: Element) => {
-    console.log('Portal mounted:', { anchor, contaner })
+  const handleMount = (anchor: Element, container: Element) => {
+    console.log('Portal mounted:', { anchor, container })
   }
 
-  const handleUnmount = (anchor: Element, contaner: Element) => {
-    console.log('Portal unmounted:', { anchor, contaner })
+  const handleUnmount = (anchor: Element, container: Element) => {
+    console.log('Portal unmounted:', { anchor, container })
   }
 
   return (
