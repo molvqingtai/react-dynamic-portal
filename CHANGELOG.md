@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.6...v1.1.7) (2025-09-28)
+
+
+### Performance Improvements
+
+* add peerDependencies in the root directory ([dd60ab0](https://github.com/molvqingtai/react-magic-portal/commit/dd60ab0f22ed32bfc024fb956d89b00d68ef4d81))
+
 ## [1.1.6](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.5...v1.1.6) (2025-09-27)
 
 
