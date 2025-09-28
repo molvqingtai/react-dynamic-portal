@@ -22,23 +22,12 @@
     "prepare": "husky"
   },
   "keywords": [
-    "react",
-    "portal",
-    "dynamic",
+    "react-portal",
+    "anchor",
     "browser-extension",
     "content-script",
     "mutation-observer",
-    "inject",
-    "mount",
-    "anchor",
-    "reactdom",
-    "createportal",
-    "web-extension",
-    "chrome-extension",
-    "firefox-extension",
-    "dynamic-content",
-    "dom-manipulation",
-    "typescript"
+    "dynamic-content"
   ],
   "author": "molvqingtai",
   "license": "MIT",
@@ -58,6 +47,10 @@
     "husky": "^9.1.7",
     "npm-run-all": "^4.1.5",
     "semantic-release": "^24.2.9"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public"
