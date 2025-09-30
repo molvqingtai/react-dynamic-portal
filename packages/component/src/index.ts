@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback, useLayoutEffect } from 'react'
-import ReactDOM from 'react-dom'
+import { createPortal } from 'react-dom'
 
 export interface MagicPortalProps {
   anchor: string | (() => Element | null) | Element | React.RefObject<Element | null> | null
@@ -117,7 +117,7 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
     }
   }, [onMount, onUnmount, container])
 
-  return container && ReactDOM.createPortal(nodes, container, key)
+  return container && createPortal(nodes, container, key)
 }
 
 MagicPortal.displayName = 'MagicPortal'
