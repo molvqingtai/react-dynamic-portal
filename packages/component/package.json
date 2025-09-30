@@ -30,8 +30,8 @@
   "homepage": "https://github.com/molvqingtai/react-magic-portal#readme",
   "devDependencies": {
     "@eslint/js": "^9.36.0",
-    "@types/node": "^24.5.2",
-    "@types/react": "^19.1.14",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.1.15",
     "@types/react-dom": "^19.1.9",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
@@ -44,7 +44,7 @@
     "react-dom": "^19.1.1",
     "tsdown": "^0.15.5",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.1"
+    "typescript-eslint": "^8.45.0"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
