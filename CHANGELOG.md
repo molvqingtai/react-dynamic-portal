@@ -1,3 +1,10 @@
+## [1.1.9](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.8...v1.1.9) (2025-10-09)
+
+
+### Bug Fixes
+
+* remove key prop from MagicPortal to prevent React warning ([2ac6cc1](https://github.com/molvqingtai/react-magic-portal/commit/2ac6cc1d91e33b3bb5e257ed0d36d5c546b2ccd9))
+
 ## [1.1.8](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.7...v1.1.8) (2025-09-30)
 
 
