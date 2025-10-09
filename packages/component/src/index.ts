@@ -7,7 +7,6 @@ export interface MagicPortalProps {
   children?: React.ReactElement | React.ReactElement[]
   onMount?: (anchor: Element, container: Element) => void
   onUnmount?: (anchor: Element, container: Element) => void
-  key?: React.Key
 }
 
 /**
@@ -62,7 +61,7 @@ const mergeRef = <T extends Element | null>(...refs: (React.Ref<T> | undefined)[
   }
 }
 
-const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount, key }: MagicPortalProps) => {
+const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount }: MagicPortalProps) => {
   const anchorRef = useRef<Element | null>(null)
   const [container, setContainer] = useState<Element | null>(null)
 
@@ -117,7 +116,7 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
     }
   }, [onMount, onUnmount, container])
 
-  return container && createPortal(nodes, container, key)
+  return container && createPortal(nodes, container)
 }
 
 MagicPortal.displayName = 'MagicPortal'

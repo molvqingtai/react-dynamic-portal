@@ -104,7 +104,6 @@ function App() {
 | `children`  | `React.ReactElement \| React.ReactElement[]`                                               | `undefined`  | The content to render in the portal                          |
 | `onMount`   | `(anchor: Element, container: Element) => void`                                            | `undefined`  | Callback fired when the portal is mounted                    |
 | `onUnmount` | `(anchor: Element, container: Element) => void`                                            | `undefined`  | Callback fired when the portal is unmounted                  |
-| `key`       | `React.Key`                                                                                | `undefined`  | Key for the ReactDOM.createPortal                            |
 
 ### Anchor Types
 
