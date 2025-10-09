@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.7...v1.1.8) (2025-09-30)
+
+
+### Performance Improvements
+
+* react dom uses named import ([7f94ff4](https://github.com/molvqingtai/react-magic-portal/commit/7f94ff45daac11ee995df362b472b64f72453fe2))
+
 ## [1.1.7](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.6...v1.1.7) (2025-09-28)
 
 
