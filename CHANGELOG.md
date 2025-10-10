@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/molvqingtai/react-magic-portal/compare/v1.2.0...v1.2.1) (2025-10-10)
+
+
+### Bug Fixes
+
+* fix issue of text nodes not being updated & suppress React runtime warnings ([7307c2a](https://github.com/molvqingtai/react-magic-portal/commit/7307c2ad08be8a27a3e55522b0b9f14e501c61d2))
+
 # [1.2.0](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.9...v1.2.0) (2025-10-10)
 
 
