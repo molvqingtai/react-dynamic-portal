@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.9...v1.2.0) (2025-10-10)
+
+
+### Features
+
+* add root prop to customize MutationObserver scope ([e27aeeb](https://github.com/molvqingtai/react-magic-portal/commit/e27aeeb70ae2b93f9f6ac80d25deb436ca125065))
+
+
+### Performance Improvements
+
+* optimize node insertion with position check ([866947b](https://github.com/molvqingtai/react-magic-portal/commit/866947bba294d2887c30a9ce4670ecf6b5429b05))
+
 ## [1.1.9](https://github.com/molvqingtai/react-magic-portal/compare/v1.1.8...v1.1.9) (2025-10-09)
 
 
