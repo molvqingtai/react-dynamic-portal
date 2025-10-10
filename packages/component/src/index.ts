@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 export interface MagicPortalProps {
   anchor: string | (() => Element | null) | Element | React.RefObject<Element | null> | null
   position?: 'append' | 'prepend' | 'before' | 'after'
+  root?: Element
   children?: React.ReactElement | React.ReactElement[]
   onMount?: (anchor: Element, container: Element) => void
   onUnmount?: (anchor: Element, container: Element) => void
@@ -61,7 +62,14 @@ const mergeRef = <T extends Element | null>(...refs: (React.Ref<T> | undefined)[
   }
 }
 
-const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount }: MagicPortalProps) => {
+const MagicPortal = ({
+  anchor,
+  position = 'append',
+  root = document.body,
+  children,
+  onMount,
+  onUnmount
+}: MagicPortalProps) => {
   const anchorRef = useRef<Element | null>(null)
   const [container, setContainer] = useState<Element | null>(null)
 
@@ -141,12 +149,12 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
       !isSelfMutation && update()
     })
 
-    observer.observe(document.body, {
+    observer.observe(root, {
       childList: true,
       subtree: true
     })
     return () => observer.disconnect()
-  }, [update, anchor, container])
+  }, [update, anchor, container, root])
 
   useEffect(() => {
     if (container && anchorRef.current) {
