@@ -43,6 +43,14 @@ const resolveAnchor = (anchor: MagicPortalProps['anchor']) => {
   }
 }
 
+const resolveContainer = (anchor: Element | null, position: MagicPortalProps['position']): Element | null => {
+  if (!anchor) {
+    return null
+  }
+
+  return position === 'prepend' || position === 'append' ? anchor : anchor.parentElement
+}
+
 /**
  * https://github.com/facebook/react/blob/d91d28c8ba6fe7c96e651f82fc47c9d5481bf5f9/packages/react-reconciler/src/ReactFiberHooks.js#L2792
  */
@@ -84,29 +92,26 @@ const MagicPortal = ({
         return
       }
 
-      const containerElement =
-        position === 'prepend' || position === 'append' ? anchorElement : anchorElement.parentElement
+      const containerElement = resolveContainer(anchorElement, position)
       if (!containerElement) {
         return
       }
 
-      let alreadyPlaced = node.parentElement === containerElement
+      let alreadyPlaced = false
 
-      if (alreadyPlaced) {
-        switch (position) {
-          case 'append':
-            alreadyPlaced = node === containerElement.lastElementChild
-            break
-          case 'prepend':
-            alreadyPlaced = node === containerElement.firstElementChild
-            break
-          case 'before':
-            alreadyPlaced = node.nextElementSibling === anchorElement
-            break
-          case 'after':
-            alreadyPlaced = node.previousElementSibling === anchorElement
-            break
-        }
+      switch (position) {
+        case 'append':
+          alreadyPlaced = node.parentElement === containerElement && containerElement.lastChild === node
+          break
+        case 'prepend':
+          alreadyPlaced = node.parentElement === containerElement && containerElement.firstChild === node
+          break
+        case 'before':
+          alreadyPlaced = node.parentElement === containerElement && anchorElement.previousSibling === node
+          break
+        case 'after':
+          alreadyPlaced = node.parentElement === containerElement && anchorElement.nextSibling === node
+          break
       }
 
       if (!alreadyPlaced) {
@@ -134,9 +139,17 @@ const MagicPortal = ({
 
   const update = useCallback(() => {
     anchorRef.current = resolveAnchor(anchor)
-    setContainer(
-      position === 'prepend' || position === 'append' ? anchorRef.current : (anchorRef.current?.parentElement ?? null)
-    )
+    const nextContainer = resolveContainer(anchorRef.current, position)
+    /**
+     * React 19 in DEV
+     * Suppress DevTools warning from React runtime about conflicting container children.
+     * @see https://github.com/facebook/react/blob/main/packages/react-dom-bindings/src/client/ReactFiberConfigDOM.js#L973
+     */
+    if (nextContainer) {
+      ;(nextContainer as { __reactWarnedAboutChildrenConflict?: boolean }).__reactWarnedAboutChildrenConflict = true
+    }
+
+    setContainer(nextContainer)
   }, [anchor, position])
 
   useLayoutEffect(() => {
@@ -165,7 +178,7 @@ const MagicPortal = ({
     }
   }, [onMount, onUnmount, container])
 
-  return container && createPortal(nodes, container)
+  return container ? createPortal(nodes, container) : null
 }
 
 MagicPortal.displayName = 'MagicPortal'
