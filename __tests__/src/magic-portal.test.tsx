@@ -47,7 +47,9 @@ describe('MagicPortal', () => {
 
         return (
           <div>
-            <button onClick={() => setShowAnchor(true)}>Show Anchor</button>
+            <button type="button" onClick={() => setShowAnchor(true)}>
+              Show Anchor
+            </button>
             {showAnchor && <div id="dynamic-anchor">Anchor</div>}
             <MagicPortal anchor="#dynamic-anchor">
               <div data-testid="portal-content">Portal Content</div>
@@ -74,7 +76,9 @@ describe('MagicPortal', () => {
 
         return (
           <div>
-            <button onClick={() => setShowAnchor(false)}>Hide Anchor</button>
+            <button type="button" onClick={() => setShowAnchor(false)}>
+              Hide Anchor
+            </button>
             {showAnchor && <div id="dynamic-anchor">Anchor</div>}
             <MagicPortal anchor="#dynamic-anchor">
               <div data-testid="portal-content">Portal Content</div>
@@ -435,22 +439,31 @@ describe('MagicPortal', () => {
 
     it('should work with forwardRef components as portal content', () => {
       const ForwardedComponent = React.forwardRef<HTMLButtonElement, { children: React.ReactNode }>(
-        ({ children }, ref) => <button ref={ref}>{children}</button>
+        ({ children }, forwardedRef) => (
+          <button type="button" ref={forwardedRef}>
+            {children}
+          </button>
+        )
       )
 
-      const buttonRef = vi.fn()
+      ForwardedComponent.displayName = 'ForwardedComponent'
+
+      const refCalls: Array<HTMLButtonElement | null> = []
+      const handleButtonRef: React.RefCallback<HTMLButtonElement> = (element) => {
+        refCalls.push(element)
+      }
       const anchor = document.createElement('div')
       anchor.id = 'forward-ref-anchor'
       document.body.appendChild(anchor)
 
       render(
         <MagicPortal anchor="#forward-ref-anchor">
-          <ForwardedComponent ref={buttonRef}>Click me</ForwardedComponent>
+          <ForwardedComponent ref={handleButtonRef}>Click me</ForwardedComponent>
         </MagicPortal>
       )
 
-      expect(buttonRef).toHaveBeenCalledWith(expect.any(HTMLButtonElement))
-      expect(buttonRef.mock.calls[0][0]?.textContent).toBe('Click me')
+      expect(refCalls[0]).toBeInstanceOf(HTMLButtonElement)
+      expect(refCalls[0]?.textContent).toBe('Click me')
     })
 
     it('should handle single element content', () => {
@@ -527,7 +540,9 @@ describe('MagicPortal', () => {
 
         return (
           <div>
-            <button onClick={() => setShowFirst(!showFirst)}>Toggle Content</button>
+            <button type="button" onClick={() => setShowFirst(!showFirst)}>
+              Toggle Content
+            </button>
             <MagicPortal anchor="#dynamic-content-anchor">
               {showFirst ? (
                 <div ref={ref1} data-testid="first-content">
@@ -601,7 +616,9 @@ describe('MagicPortal', () => {
 
         return (
           <div>
-            <button onClick={addElement}>Add Target Element</button>
+            <button type="button" onClick={addElement}>
+              Add Target Element
+            </button>
             <MagicPortal anchor=".dynamic-target">
               <div data-testid="portal-content">Portal Content</div>
             </MagicPortal>

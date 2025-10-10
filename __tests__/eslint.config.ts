@@ -3,8 +3,7 @@ import pluginJs from '@eslint/js'
 import { defineConfig } from 'eslint/config'
 import tseslint from 'typescript-eslint'
 import prettierPlugin from 'eslint-plugin-prettier/recommended'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import eslintReact from '@eslint-react/eslint-plugin'
 
 export default defineConfig([
   {
@@ -18,13 +17,13 @@ export default defineConfig([
     }
   },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
+  tseslint.configs.recommended,
+  eslintReact.configs['recommended-typescript'],
   prettierPlugin,
-  reactHooks.configs['recommended-latest'],
-  reactRefresh.configs.vite,
   {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off'
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@eslint-react/no-forward-ref': 'off'
     }
   }
 ])

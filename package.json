@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/molvqingtai/react-magic-portal#readme",
   "dependencies": {
-    "@commitlint/cli": "^20.0.0",
+    "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
