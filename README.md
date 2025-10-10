@@ -102,7 +102,7 @@ function App() {
 | `anchor`    | `string \| (() => Element \| null) \| Element \| React.RefObject<Element \| null> \| null` | **Required**    | The target element where the portal content will be rendered |
 | `position`  | `'append' \| 'prepend' \| 'before' \| 'after'`                                             | `'append'`      | Position relative to the anchor element                      |
 | `root`      | `Element`                                                                                  | `document.body` | The root element to observe for DOM mutations                |
-| `children`  | `React.ReactElement \| React.ReactElement[]`                                               | `undefined`     | The content to render in the portal                          |
+| `children`  | `React.ReactElement \| null`                                               | `undefined`     | A single React element to render in the portal (does not support Fragment)                          |
 | `onMount`   | `(anchor: Element, container: Element) => void`                                            | `undefined`     | Callback fired when the portal is mounted                    |
 | `onUnmount` | `(anchor: Element, container: Element) => void`                                            | `undefined`     | Callback fired when the portal is unmounted                  |
 

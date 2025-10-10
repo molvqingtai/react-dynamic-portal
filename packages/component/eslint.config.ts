@@ -27,6 +27,8 @@ const config: Linter.FlatConfig[] = defineConfig([
       '@typescript-eslint/no-unused-expressions': 'off',
       '@eslint-react/no-children-map': 'off',
       '@eslint-react/no-clone-element': 'off',
+      '@eslint-react/no-children-only': 'off',
+      '@eslint-react/no-children-count': 'off',
       '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'off'
     }
   }

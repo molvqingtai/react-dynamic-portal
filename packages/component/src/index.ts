@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef, useCallback, useLayoutEffect } from 'react'
+import React, { useEffect, useState, useRef, useCallback, useLayoutEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 
 export interface MagicPortalProps {
   anchor: string | (() => Element | null) | Element | React.RefObject<Element | null> | null
   position?: 'append' | 'prepend' | 'before' | 'after'
   root?: Element
-  children?: React.ReactElement | React.ReactElement[]
+  children?: React.ReactElement | null
   onMount?: (anchor: Element, container: Element) => void
   onUnmount?: (anchor: Element, container: Element) => void
 }
@@ -127,15 +127,30 @@ const MagicPortal = ({
     [position]
   )
 
-  const nodes = React.Children.map(children, (item) => {
-    if (!React.isValidElement(item)) {
+  const child = useMemo(() => {
+    if (React.Children.count(children) > 1) {
+      console.error(
+        '[react-magic-portal] Multiple children are not supported, expected to receive a single React element child.'
+      )
       return null
     }
-    const originalRef = getElementRef(item)
-    return React.cloneElement(item as React.ReactElement<any>, {
+
+    if (!React.isValidElement(children)) {
+      return null
+    }
+
+    if (children.type === React.Fragment) {
+      console.error(
+        '[react-magic-portal] Fragment children are not supported, expected to receive a single React element child.'
+      )
+      return null
+    }
+
+    const originalRef = getElementRef(children)
+    return React.cloneElement(children as React.ReactElement<any>, {
       ref: mergeRef(originalRef, insertNode)
     })
-  })
+  }, [children, insertNode])
 
   const update = useCallback(() => {
     anchorRef.current = resolveAnchor(anchor)
@@ -178,7 +193,7 @@ const MagicPortal = ({
     }
   }, [onMount, onUnmount, container])
 
-  return container ? createPortal(nodes, container) : null
+  return container && child ? createPortal(child, container) : null
 }
 
 MagicPortal.displayName = 'MagicPortal'
