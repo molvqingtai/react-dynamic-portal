@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/molvqingtai/react-magic-portal/compare/v1.2.1...v1.3.0) (2025-10-10)
+
+
+### Features
+
+* enforce single child ([8fe438d](https://github.com/molvqingtai/react-magic-portal/commit/8fe438d149a04d3070fe8eed725d7932492da01c))
+
 ## [1.2.1](https://github.com/molvqingtai/react-magic-portal/compare/v1.2.0...v1.2.1) (2025-10-10)
 
 
