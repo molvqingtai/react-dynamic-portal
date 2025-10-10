@@ -33,16 +33,16 @@ function App() {
       </div>
 
       {/* Target anchor examples */}
-      <MagicPortal anchor="#dynamic-anchor" position="append" onMount={handleMount} onUnmount={handleUnmount}>
-        <PortalContent position="append" />
+      <MagicPortal anchor="#dynamic-anchor" position="before" onMount={handleMount} onUnmount={handleUnmount}>
+        <PortalContent position="before" />
       </MagicPortal>
 
       <MagicPortal anchor="#dynamic-anchor" position="prepend" onMount={handleMount} onUnmount={handleUnmount}>
         <PortalContent position="prepend" />
       </MagicPortal>
 
-      <MagicPortal anchor="#dynamic-anchor" position="before" onMount={handleMount} onUnmount={handleUnmount}>
-        <PortalContent position="before" />
+      <MagicPortal anchor="#dynamic-anchor" position="append" onMount={handleMount} onUnmount={handleUnmount}>
+        <PortalContent position="append" />
       </MagicPortal>
 
       <MagicPortal anchor="#dynamic-anchor" position="after" onMount={handleMount} onUnmount={handleUnmount}>

@@ -382,28 +382,6 @@ describe('MagicPortal', () => {
       expect(refCallback).toHaveBeenLastCalledWith(null)
     })
 
-    it('should handle multiple content elements with refs', () => {
-      const ref1 = vi.fn()
-      const ref2 = vi.fn()
-      const anchor = document.createElement('div')
-      anchor.id = 'multi-ref-anchor'
-      document.body.appendChild(anchor)
-
-      render(
-        <MagicPortal anchor="#multi-ref-anchor">
-          <div ref={ref1} data-testid="content-1">
-            Content 1
-          </div>
-          <span ref={ref2} data-testid="content-2">
-            Content 2
-          </span>
-        </MagicPortal>
-      )
-
-      expect(ref1).toHaveBeenCalledWith(expect.any(HTMLDivElement))
-      expect(ref2).toHaveBeenCalledWith(expect.any(HTMLSpanElement))
-    })
-
     it('should maintain content refs across position changes', async () => {
       const contentRef = vi.fn()
       const anchor = document.createElement('div')
@@ -466,43 +444,26 @@ describe('MagicPortal', () => {
       expect(refCalls[0]?.textContent).toBe('Click me')
     })
 
-    it('should handle single element content', () => {
+    it('should log error when multiple children are provided', () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
       const anchor = document.createElement('div')
-      anchor.id = 'single-content-anchor'
+      anchor.id = 'multiple-children-anchor'
       document.body.appendChild(anchor)
 
       render(
-        <MagicPortal anchor="#single-content-anchor">
-          <span data-testid="single-content">Just content</span>
+        // @ts-expect-error - intentionally passing multiple children to assert runtime guard
+        <MagicPortal anchor="#multiple-children-anchor">
+          <span data-testid="first-element">First element</span>
+          <span data-testid="second-element">Second element</span>
         </MagicPortal>
       )
 
-      expect(screen.getByTestId('single-content')).toBeTruthy()
-      expect(anchor.contains(screen.getByTestId('single-content'))).toBe(true)
-    })
-
-    it('should handle multiple element content with refs', () => {
-      const ref1 = vi.fn()
-      const ref2 = vi.fn()
-      const anchor = document.createElement('div')
-      anchor.id = 'multiple-content-anchor'
-      document.body.appendChild(anchor)
-
-      render(
-        <MagicPortal anchor="#multiple-content-anchor">
-          <span ref={ref1} data-testid="first-element">
-            First element
-          </span>
-          <div ref={ref2} data-testid="second-element">
-            Second element
-          </div>
-        </MagicPortal>
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        '[react-magic-portal] Multiple children are not supported, expected to receive a single React element child.'
       )
+      expect(anchor.children.length).toBe(0)
 
-      expect(ref1).toHaveBeenCalledWith(expect.any(HTMLSpanElement))
-      expect(ref2).toHaveBeenCalledWith(expect.any(HTMLDivElement))
-      expect(screen.getByTestId('first-element')).toBeTruthy()
-      expect(screen.getByTestId('second-element')).toBeTruthy()
+      consoleErrorSpy.mockRestore()
     })
 
     it('should handle nested refs correctly', () => {
@@ -707,6 +668,33 @@ describe('MagicPortal', () => {
   })
 
   describe('Text Node Handling', () => {
+    it('should not render Fragment children', () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const anchor = document.createElement('div')
+      anchor.id = 'fragment-anchor'
+      document.body.appendChild(anchor)
+
+      render(
+        <MagicPortal anchor="#fragment-anchor">
+          <>
+            <div>Child 1</div>
+            <div>Child 2</div>
+          </>
+        </MagicPortal>
+      )
+
+      // Should log error about Fragment not being supported
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        '[react-magic-portal] Fragment children are not supported, expected to receive a single React element child.'
+      )
+
+      // Anchor should remain empty since Fragment is not supported
+      expect(anchor.textContent).toBe('')
+      expect(anchor.children.length).toBe(0)
+
+      consoleErrorSpy.mockRestore()
+    })
+
     it('should not render pure text content', () => {
       const anchor = document.createElement('div')
       anchor.id = 'text-only-anchor'
@@ -722,46 +710,14 @@ describe('MagicPortal', () => {
       expect(anchor.children.length).toBe(0)
     })
 
-    it('should not render mixed text and element content (only elements)', () => {
+    it('should not render null children', () => {
       const anchor = document.createElement('div')
-      anchor.id = 'mixed-text-anchor'
+      anchor.id = 'null-anchor'
       document.body.appendChild(anchor)
 
-      render(
-        // @ts-expect-error - testing mixed content behavior
-        <MagicPortal anchor="#mixed-text-anchor">
-          Some text before
-          {/* @ts-expect-error - testing mixed content behavior*/}
-          <div data-testid="element-content">Element</div>
-          Some text after
-        </MagicPortal>
-      )
+      render(<MagicPortal anchor="#null-anchor">{null}</MagicPortal>)
 
-      // Only the div element should be rendered, text nodes should be ignored
-      expect(screen.getByTestId('element-content')).toBeTruthy()
-      expect(anchor.contains(screen.getByTestId('element-content'))).toBe(true)
-
-      // Text content should only be from the div element, not the text nodes
-      expect(anchor.textContent?.trim()).toBe('Element')
-      expect(anchor.textContent).not.toContain('Some text before')
-      expect(anchor.textContent).not.toContain('Some text after')
-    })
-
-    it('should not render number or boolean primitives', () => {
-      const anchor = document.createElement('div')
-      anchor.id = 'primitive-anchor'
-      document.body.appendChild(anchor)
-
-      render(
-        <MagicPortal anchor="#primitive-anchor">
-          {42 as any}
-          {true as any}
-          {null as any}
-          {undefined as any}
-        </MagicPortal>
-      )
-
-      // Anchor should remain empty since primitives are not rendered
+      // Anchor should remain empty since null is not rendered
       expect(anchor.textContent).toBe('')
       expect(anchor.children.length).toBe(0)
     })
