@@ -27,7 +27,9 @@ function App() {
         )}
       </div>
       <div className="controls">
-        <button onClick={() => setShowAnchor(!showAnchor)}>{showAnchor ? 'Hide Anchor' : 'Show Anchor'}</button>
+        <button type="button" onClick={() => setShowAnchor(!showAnchor)}>
+          {showAnchor ? 'Hide Anchor' : 'Show Anchor'}
+        </button>
       </div>
 
       {/* Target anchor examples */}
