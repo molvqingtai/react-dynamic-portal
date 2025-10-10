@@ -65,21 +65,62 @@ const MagicPortal = ({ anchor, position = 'append', children, onMount, onUnmount
   const anchorRef = useRef<Element | null>(null)
   const [container, setContainer] = useState<Element | null>(null)
 
-  const nodes = React.Children.map(children, (item) => {
-    if (!React.isValidElement(item)) {
-      return null
-    }
-    const originalRef = getElementRef(item)
-    return React.cloneElement(item as React.ReactElement<any>, {
-      ref: mergeRef(originalRef, (node) => {
+  const insertNode = useCallback(
+    (node: Element | null) => {
+      if (!node) {
+        return
+      }
+
+      const anchorElement = anchorRef.current
+      if (!anchorElement) {
+        return
+      }
+
+      const containerElement =
+        position === 'prepend' || position === 'append' ? anchorElement : anchorElement.parentElement
+      if (!containerElement) {
+        return
+      }
+
+      let alreadyPlaced = node.parentElement === containerElement
+
+      if (alreadyPlaced) {
+        switch (position) {
+          case 'append':
+            alreadyPlaced = node === containerElement.lastElementChild
+            break
+          case 'prepend':
+            alreadyPlaced = node === containerElement.firstElementChild
+            break
+          case 'before':
+            alreadyPlaced = node.nextElementSibling === anchorElement
+            break
+          case 'after':
+            alreadyPlaced = node.previousElementSibling === anchorElement
+            break
+        }
+      }
+
+      if (!alreadyPlaced) {
         const positionMap = {
           before: 'beforebegin',
           prepend: 'afterbegin',
           append: 'beforeend',
           after: 'afterend'
         } as const
-        node && anchorRef.current?.insertAdjacentElement(positionMap[position], node)
-      })
+        anchorElement.insertAdjacentElement(positionMap[position], node)
+      }
+    },
+    [position]
+  )
+
+  const nodes = React.Children.map(children, (item) => {
+    if (!React.isValidElement(item)) {
+      return null
+    }
+    const originalRef = getElementRef(item)
+    return React.cloneElement(item as React.ReactElement<any>, {
+      ref: mergeRef(originalRef, insertNode)
     })
   })
 
